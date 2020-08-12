@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SearchForm from './SearchForm/searchform'
+import Container from '@material-ui/core/Container'
+import ThemeProvider from '@material-ui/styles/ThemeProvider'
+import { createMuiTheme } from '@material-ui/core/styles'
+import grey from '@material-ui/core/colors/grey'
+import blueGrey from '@material-ui/core/colors/blueGrey';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: blueGrey[500],
+    },
+    secondary: {
+      main: grey[500],
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="sm">
+        <SearchForm />
+      </Container>
+    </ThemeProvider>
   );
 }
 
