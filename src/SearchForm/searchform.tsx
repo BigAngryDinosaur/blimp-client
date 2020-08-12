@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
-import { Backdrop, Button } from '@material-ui/core';
+import { Typography, Link, Button } from '@material-ui/core';
+import { shortenUrl } from './UrlService'
 
 const useStyles = makeStyles({
     root: {
@@ -25,13 +26,31 @@ const useStyles = makeStyles({
 })
 
 function SearchForm() {
+
+    const [url, setUrl] = useState("")
+    const [linkUrl, setLinkUrl] = useState("")
+    
+    async function makeTinyUrl() {
+        const result = await shortenUrl(url)
+        setLinkUrl(`http://localhost:8082/${result.code}`)
+    }
+
     const classes = useStyles()
+
     return (
         <div className={classes.root}>
-            <form className={classes.form} noValidate autoComplete="off">
+            {linkUrl.length > 0 &&
+                <Typography>
+                    <Link href={linkUrl}>{linkUrl}</Link>
+                </Typography>
+            }
+            <form className={classes.form} noValidate autoComplete="off" onSubmit={(e) => {
+                e.preventDefault();
+                makeTinyUrl()
+            }}>
                 <div className={classes.urlgroup} >
-                    <TextField className={classes.textfield} variant="filled" id="standard-basic" label="URL" />
-                    <Button variant="contained" size="small" color="primary">Shorten</Button>
+                    <TextField value={url} onChange={e => setUrl(e.target.value)} className={classes.textfield} variant="filled" id="standard-basic" label="URL" />
+                    <Button onClick={() => makeTinyUrl()} variant="contained" size="small" color="primary">Shorten</Button>
                 </div>
             </form>
         </div>
