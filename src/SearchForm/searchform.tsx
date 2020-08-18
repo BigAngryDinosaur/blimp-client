@@ -50,7 +50,7 @@ function SearchForm() {
             }}>
                 <div className={classes.urlgroup} >
                     <TextField value={url} onChange={e => setUrl(e.target.value)} className={classes.textfield} variant="filled" id="standard-basic" label="URL" />
-                    <Button onClick={() => makeTinyUrl()} variant="contained" size="small" color="primary">Shorten</Button>
+                    <Button type="submit" variant="contained" size="small" color="primary">Shorten</Button>
                 </div>
             </form>
         </div>
