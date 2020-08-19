@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, FunctionComponent } from 'react';
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography, Link, Button } from '@material-ui/core';
 import { shortenUrl } from './UrlService'
+import { RouteComponentProps } from '@reach/router';
 
 const useStyles = makeStyles({
     root: {
@@ -23,9 +24,9 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "row"
     }
-})
+});
 
-function SearchForm() {
+const SearchForm: FunctionComponent<RouteComponentProps> = props => {
 
     const [url, setUrl] = useState("")
     const [linkUrl, setLinkUrl] = useState("")
@@ -55,6 +56,6 @@ function SearchForm() {
             </form>
         </div>
     )
-}
+};
 
 export default SearchForm;

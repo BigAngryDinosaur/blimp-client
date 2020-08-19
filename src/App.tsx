@@ -1,12 +1,15 @@
-import React from 'react';
-import SearchForm from './SearchForm/searchform'
-import LoginInfo from './LoginInfo/loginInfo'
+import React, { useState, Context } from 'react';
+import SearchForm from './SearchForm/SearchForm'
 import { Grid } from '@material-ui/core'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import { createMuiTheme } from '@material-ui/core/styles'
 import grey from '@material-ui/core/colors/grey'
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import { Router, Link } from '@reach/router';
+import LoginForm from './Login/LoginForm';
+import NavBar from './Nav/NavBar';
+import UserContext from './Auth/UserContext';
+import { User } from './Auth/AuthService';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,21 +23,28 @@ const theme = createMuiTheme({
 });
 
 function App() {
+
+  const userHook = useState({} as User);
+
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container spacing={3}>
-        <Grid item xs={8}>
-        </Grid>
-        <Grid item xs={4}>
-          <LoginInfo />
-        </Grid>
-        <Grid container justify="center">
-          <Grid xs={6}>
-            <SearchForm />
+    <React.StrictMode>
+      <UserContext.Provider value={userHook}>
+        <ThemeProvider theme={theme}>
+          <Grid container spacing={3}>
+            <Grid container justify="center">
+              <Grid xs={6}></Grid>
+              <Grid xs={4}><NavBar /></Grid>
+              <Grid xs={6}>
+                <Router>
+                  <SearchForm path="/" />
+                  <LoginForm path="/login" />
+                </Router>
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+        </ThemeProvider>
+      </UserContext.Provider>
+    </React.StrictMode>
   );
 }
 
